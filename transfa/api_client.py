@@ -3,6 +3,7 @@ import json
 from requests import request
 
 from transfa import api_key, api_base, default_auth_header_bearer
+from transfa.api_resources.payments import PaymentResource
 
 from transfa.version import VERSION
 
@@ -20,6 +21,7 @@ class TransfaAPIClient:
         self.timeout = timeout
         self.verify_ssl = verify_ssl
         self.api_key = api_key
+        self.Payment = PaymentResource(self)
 
     def _get_url(self, endpoint):
         """Get URL for requests"""
@@ -70,3 +72,6 @@ class TransfaAPIClient:
     def get(self, endpoint, data, **kwargs):
         """GET requests"""
         return self._request("GET", endpoint, **kwargs)
+
+
+client = TransfaAPIClient()

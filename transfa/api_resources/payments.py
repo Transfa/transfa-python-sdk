@@ -75,3 +75,5 @@ class PaymentResource:
 
         return response_data.get('status'), response_data.get('financial_status')
 
+
+Payment = PaymentResource()
