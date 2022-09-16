@@ -1,5 +1,3 @@
-__version__ = "0.0.1"
-
 # Transfa Python bindings
 # API docs at http://docs.transfapp.com
 # Authors:
@@ -11,8 +9,8 @@ __version__ = "0.0.1"
 api_key = None
 private_secret = None
 api_base = "https://api.transfapp.com"
-api_version = None
 verify_ssl = True
+default_auth_header_bearer = "Api-Optimus-Key"
 
 
 # API Resources
