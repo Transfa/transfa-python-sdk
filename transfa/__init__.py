@@ -1,4 +1,4 @@
-__version__ = "0.0.0"
+__version__ = "0.0.1"
 
 # Transfa Python bindings
 # API docs at http://docs.transfapp.com
