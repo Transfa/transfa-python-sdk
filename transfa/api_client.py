@@ -2,13 +2,15 @@ import json
 
 from requests import request
 
-from transfa import api_key, api_base, default_auth_header_bearer, __version__
+from transfa import api_key, api_base, default_auth_header_bearer
+
+from transfa.version import VERSION
 
 
 class TransfaAPIClient:
     _base_url = api_base
     auth_header_prefix = default_auth_header_bearer
-    __version__ = __version__
+    __version__ = VERSION
 
     def __init__(
         self,
