@@ -1,14 +1,14 @@
 from setuptools import setup, find_packages
 
 setup(
-    name='transfa-python-sdk',
-    version='0.0.0',
+    name="transfa-python-sdk",
+    version="0.0.0",
     packages=find_packages(exclude=["tests", "tests.*"]),
-    url='https://transfapp.com',
-    license='MIT',
-    author='Kolawole Mangabo',
-    author_email='kolawole.mangabo@transfapp.com',
-    description='This is the official python SDK for the Transfa API.',
+    url="https://transfapp.com",
+    license="MIT",
+    author="Kolawole Mangabo",
+    author_email="kolawole.mangabo@transfapp.com",
+    description="This is the official python SDK for the Transfa API.",
     keyword="transfa api payment mtn-momo moov",
     install_requires=[
         'requests >= 2.20; python_version >= "3.0"',

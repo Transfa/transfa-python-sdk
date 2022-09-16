@@ -22,4 +22,3 @@ from transfa.api_resources import *
 # Webhook
 
 from transfa.webhook import *
-
