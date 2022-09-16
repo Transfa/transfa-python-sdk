@@ -6,6 +6,9 @@ from transfa.enums import PaymentTypeEnum
 
 
 class PaymentResource:
+    """
+        This class contains methods and utils used for interacting with the payment API.
+    """
     def __init__(self, api):
         self.api = api
         self.base_url = "api/v1/optimus/payment"
