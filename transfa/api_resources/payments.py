@@ -48,6 +48,7 @@ class PaymentResource:
 
     def retrieve(self, payment_id, **kwargs):
         """
+        :param payment_id: Payment id.
         :param kwargs:
         :return:  Response object.
         """
@@ -55,6 +56,7 @@ class PaymentResource:
 
     def refund(self, payment_id, **kwargs):
         """
+        :param payment_id: Payment id.
         :param kwargs:
         :return:  Response object.
         """
@@ -62,7 +64,7 @@ class PaymentResource:
 
     def status(self, payment_id):
         """
-        :param payment_id: The payment id of the payment.
+        :param payment_id: Payment id.
         :return: A a tuple of the status and financial status of the payment. => (status, financial_status)
         """
         response = self.retrieve(payment_id)
