@@ -13,6 +13,7 @@ private_secret = None
 api_base = "https://api.transfapp.com"
 api_version = None
 verify_ssl = True
+default_auth_header_bearer = "Api-Optimus-Key"
 
 
 # API Resources
