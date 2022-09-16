@@ -4,6 +4,9 @@ Changelog
 [Unreleased]
 ------------
 
+[v0.1.2] - 2022-09-16
+------------------
+
 [v0.1.1] - 2022-09-16
 ------------------
 - add github actions for deploy on testpipy
