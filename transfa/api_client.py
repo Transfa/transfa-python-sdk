@@ -70,7 +70,3 @@ class TransfaAPIClient:
     def get(self, endpoint, data, **kwargs):
         """GET requests"""
         return self._request("GET", endpoint, **kwargs)
-
-
-def get_default_log_message(response):
-    return f"Response has failed with status {response.status_code} => {response.text}"
