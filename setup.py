@@ -1,0 +1,42 @@
+from setuptools import setup, find_packages
+
+setup(
+    name='transfa-python-sdk',
+    version='0.0.0',
+    packages=find_packages(exclude=["tests", "tests.*"]),
+    url='https://transfapp.com',
+    license='MIT',
+    author='Kolawole Mangabo',
+    author_email='kolawole.mangabo@transfapp.com',
+    description='This is the official python SDK for the Transfa API.',
+    keyword="transfa api payment mtn-momo moov",
+    install_requires=[
+        'requests >= 2.20; python_version >= "3.0"',
+        'requests[security] >= 2.20; python_version < "3.0"',
+    ],
+    python_requires="!=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*",
+    project_urls={
+        "Bug Tracker": "https://github.com/Transfa/transfa-python-sdk/issues",
+        "Changes": "https://github.com/Transfa/transfa-python-sdk/blob/main/CHANGELOG.md",
+        "Documentation": "https://docs.transfapp.com/docs/",
+        "Source Code": "https://github.com/Transfa/transfa-python-sdk/",
+    },
+    classifiers=[
+        "Development Status :: 5 - Production/Stable",
+        "Intended Audience :: Developers",
+        "License :: OSI Approved :: MIT License",
+        "Operating System :: OS Independent",
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
+        "Programming Language :: Python :: 3.7",
+        "Programming Language :: Python :: 3.8",
+        "Programming Language :: Python :: 3.9",
+        "Programming Language :: Python :: 3.10",
+        "Programming Language :: Python :: Implementation :: PyPy",
+        "Topic :: Software Development :: Libraries :: Python Modules",
+    ],
+    setup_requires=["wheel"],
+)
