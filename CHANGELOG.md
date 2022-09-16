@@ -6,6 +6,7 @@ Changelog
 
 [v0.1.1] - 2022-09-16
 ------------------
+- add github actions for deploy on testpipy
 
 [v0.1.0] - 2022-09-16
 ------------------
