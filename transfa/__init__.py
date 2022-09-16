@@ -13,3 +13,13 @@ private_secret = None
 api_base = "https://api.transfapp.com"
 api_version = None
 verify_ssl = True
+
+
+# API Resources
+
+from transfa.api_resources import *
+
+# Webhook
+
+from transfa.webhook import *
+
