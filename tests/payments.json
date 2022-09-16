@@ -1,0 +1,24 @@
+[
+  {
+  "id": "79659394695c4136a8067135ffac6958",
+  "account_alias": "60201010",
+  "first_name": null,
+  "last_name": null,
+  "email": null,
+  "type": "request-payment",
+  "amount": 5000,
+  "reference": "0JDEOVM7OE",
+  "processing_number": null,
+  "mode": "mtn-benin",
+  "status": "processing",
+  "financial_status": "pending",
+  "completed": null,
+  "processing": "2022-09-15T17:52:49.925484Z",
+  "failed": null,
+  "created": "2022-09-15T17:52:49.922999Z",
+  "updated": "2022-09-15T17:52:49.925581Z",
+  "webhook_url": null,
+  "refunded": null,
+  "test": true
+}
+]

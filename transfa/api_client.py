@@ -35,7 +35,7 @@ class TransfaAPIClient:
 
         return f"{url}/{endpoint}"
 
-    def _request(self, method, endpoint, data, params=None, **kwargs):
+    def _request(self, method, endpoint, data=None, params=None, **kwargs):
         """Do requests"""
         if params is None:
             params = {}
@@ -65,11 +65,11 @@ class TransfaAPIClient:
             **kwargs,
         )
 
-    def post(self, endpoint, data, **kwargs):
+    def post(self, endpoint, data=None, **kwargs):
         """POST requests"""
         return self._request("POST", endpoint, data, **kwargs)
 
-    def get(self, endpoint, data, **kwargs):
+    def get(self, endpoint, **kwargs):
         """GET requests"""
         return self._request("GET", endpoint, **kwargs)
 
