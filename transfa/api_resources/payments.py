@@ -11,9 +11,9 @@ class TransfaAPIClient:
     __version__ = __version__
 
     def __init__(
-            self,
-            timeout=5,
-            verify_ssl=True,
+        self,
+        timeout=5,
+        verify_ssl=True,
     ):
         self.timeout = timeout
         self.verify_ssl = verify_ssl
@@ -40,8 +40,9 @@ class TransfaAPIClient:
         headers = {
             "user-agent": "Transfa API SDK-Python/%s" % self.__version__,
             "accept": "application/json",
-            "Authorization": f"{self.auth_header_prefix} {self.api_key}"
+            "Authorization": f"{self.auth_header_prefix} {self.api_key}",
         }
+
         if "headers" in kwargs:
             headers = {**kwargs.pop("headers"), **headers}
 
@@ -63,3 +64,7 @@ class TransfaAPIClient:
     def post(self, endpoint, data, **kwargs):
         """POST requests"""
         return self._request("POST", endpoint, data, **kwargs)
+
+    def get(self, endpoint, data, **kwargs):
+        """GET requests"""
+        return self._request("GET", endpoint, **kwargs)
