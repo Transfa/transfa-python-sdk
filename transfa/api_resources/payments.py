@@ -1,70 +1,72 @@
-import json
+import logging
+import uuid
 
-from requests import request
+from transfa import get_default_log_message
+from transfa.enums import PaymentTypeEnum
 
-from transfa import api_key, api_base, default_auth_header_bearer, __version__
 
+class PaymentResource:
+    def __init__(self, api):
+        self.api = api
+        self.base_url = "api/v1/optimus/payment"
 
-class TransfaAPIClient:
-    _base_url = api_base
-    auth_header_prefix = default_auth_header_bearer
-    __version__ = __version__
+    def request_payment(self, data, **kwargs):
+        """
+        This method create a payment request on the /payment/ endpoint.
+        :param data: a dict with the following information:
+            :key account_alias: the phone number of the consumer. Required.
+            :key amount: the amount of the payment. Required.
+            :key mode: The mode of payment. For the moment, we only supports the MTN Momo Bénin API.
+            :key webhook_url: the callback URL.
+            :key first_name: First name of the client.
+            :key last_name: Last name of the client.
+            :key email: Email of the client.
+        :param kwargs:
+        :return: Response Object.
+        """
 
-    def __init__(
-        self,
-        timeout=5,
-        verify_ssl=True,
-    ):
-        self.timeout = timeout
-        self.verify_ssl = verify_ssl
-        self.api_key = api_key
-
-    def _get_url(self, endpoint):
-        """Get URL for requests"""
-        url = self._base_url
-
-        # Making sure URL is in the right format.
-        if url.endswith("/"):
-            url = url[:-1]
-        if endpoint.startswith("/"):
-            endpoint = endpoint[:-1]
-
-        return f"{url}/{endpoint}"
-
-    def _request(self, method, endpoint, data, params=None, **kwargs):
-        """Do requests"""
-        if params is None:
-            params = {}
-
-        url = self._get_url(endpoint)
-        headers = {
-            "user-agent": "Transfa API SDK-Python/%s" % self.__version__,
-            "accept": "application/json",
-            "Authorization": f"{self.auth_header_prefix} {self.api_key}",
+        # Idempotency key setup in headers
+        kwargs['headers'] = {
+            "Idempotency-Key": uuid.uuid4()
         }
 
-        if "headers" in kwargs:
-            headers = {**kwargs.pop("headers"), **headers}
+        data["type"] = PaymentTypeEnum.request_payment.value
 
-        if data is not None:
-            data = json.dumps(data, ensure_ascii=False).encode("utf-8")
-            headers["content-type"] = "application/json;charset=utf-8"
+        url = f"{self.base_url}/"
 
-        return request(
-            method=method,
-            url=url,
-            verify=self.verify_ssl,
-            params=params,
-            data=data,
-            timeout=self.timeout,
-            headers=headers,
-            **kwargs,
-        )
+        return self.api.post(url, data, **kwargs)
 
-    def post(self, endpoint, data, **kwargs):
-        """POST requests"""
-        return self._request("POST", endpoint, data, **kwargs)
+    def list(self, **kwargs):
+        """
+        :param kwargs:
+        :return:  Response object.
+        """
+        return self.api.get(f"{self.base_url}/", **kwargs)
 
-    def get(self, endpoint, data, **kwargs):
-        """GET requests"""
-        return self._request("GET", endpoint, **kwargs)
+    def retrieve(self, payment_id, **kwargs):
+        """
+        :param kwargs:
+        :return:  Response object.
+        """
+        return self.api.get(f"{self.base_url}/{payment_id}/", **kwargs)
+
+    def refund(self, payment_id, **kwargs):
+        """
+        :param kwargs:
+        :return:  Response object.
+        """
+        return self.api.post(f"{self.base_url}/{payment_id}/refund/", **kwargs)
+
+    def status(self, payment_id):
+        """
+        :param payment_id: The payment id of the payment.
+        :return: A a tuple of the status and financial status of the payment. => (status, financial_status)
+        """
+        response = self.retrieve(payment_id)
+        if response.status_code != 200:
+            logging.error(get_default_log_message(response))
+
+        response_data = response.json()
+
+        return response_data.get('status'), response_data.get('financial_status')
+
