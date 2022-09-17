@@ -32,7 +32,7 @@ jobs:
         run: |
           pytest
   build-n-publish:
-    name: Build and publish Python 🐍 distributions 📦 to PyPI and TestPyPI
+    name: Build and publish Python 🐍 distributions 📦 to PyPI
     needs: [test]
     runs-on: ubuntu-latest
     steps:
