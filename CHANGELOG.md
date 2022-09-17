@@ -4,6 +4,11 @@ Changelog
 [Unreleased]
 ------------
 
+[v0.1.3] - 2022-09-17
+------------------
+- add README.md
+- change package name
+
 [v0.1.2] - 2022-09-16
 ------------------
 - fix deploy issues

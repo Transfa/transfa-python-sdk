@@ -1,23 +1,34 @@
 # Transfa Python SDK
 
-This is the official SDK that makes integration with the Transfa API easier. 
+The Transfa Python SDK provides methods and resources to the Transfa API for applications written in Python. 
 
-## Setup
+## Documentation
 
-First of all, install the package.
+You can check the[Python API documentation](https://docs.transfapp.com/sdk/python/) for more details about the API. 
+
+## Installation
+
+Run the following command:
 
 ```shell
-pip install transfa
+pip install --upgrade transfa
 ```
 
-## Request a Payment
+## Requirements
+- Python 3.8+ 
 
-## Transfer
+## Usage
 
-## Refund a payment
+```python
+from transfa.api_client import client
 
-## Process webhooks
+client.api_key = "ak_test_..."
 
-## Get payment list
+response = client.Payment.request_payment({
+        "account_alias": "60201010",
+        "amount": 5000,
+        "mode": "mtn-benin"
+    })
 
-## Retrieve a Payment
+print(response.text)
+```
