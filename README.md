@@ -4,7 +4,7 @@ The Transfa Python SDK provides methods and resources to the Transfa API for app
 
 ## Documentation
 
-You can check the[Python API documentation](https://docs.transfapp.com/sdk/python/) for more details about the API. 
+You can check the [Python API documentation](https://docs.transfapp.com/sdk/python/) for more details about the API. 
 
 ## Installation
 
