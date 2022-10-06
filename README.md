@@ -32,3 +32,34 @@ response = client.Payment.request_payment({
 
 print(response.text)
 ```
+
+## Verify webhook
+
+Before you respond to a Webhook request, you need first to verify that it is coming from Transfa.
+
+```python
+from rest_framework.decorators import api_view
+from rest_framework import status
+from rest_framework.response import Response
+
+from transfa.webhook import verify_webhook
+
+# Set the secret key as an environment variable
+secret_key = 'ps_test:...'
+
+@api_view(["POST"])
+def webhook_endpoint(request):
+    body = request.data
+    
+    # Will return True or False
+    verified = verify_webhook(secret_key, body, request.META.get("x-webhook-optimus-signature"))
+
+    if not verified:
+        return Response({"detail": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
+
+    # Process Webhook payload
+    # ...
+    # ...
+
+    return Response({"detail": True}, status=status.HTTP_200_OK)
+```
