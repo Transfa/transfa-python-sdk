@@ -44,7 +44,7 @@ from rest_framework.response import Response
 
 from transfa.webhook import verify_webhook
 
-# Set the secret key as an environment variable
+# Do not save the secret key in plain text in your code, set it instead as an environment variable.
 secret_key = 'ps_test:...'
 
 @api_view(["POST"])
