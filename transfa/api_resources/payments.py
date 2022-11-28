@@ -72,7 +72,7 @@ class PaymentResource:
     def status(self, payment_id):
         """
         :param payment_id: Payment id.
-        :return: A a tuple of the status and financial status of the payment. => (status, financial_status)
+        :return: A tuple of the status and financial status of the payment. => (status, financial_status)
         """
         response = self.retrieve(payment_id)
         if response.status_code != 200:
