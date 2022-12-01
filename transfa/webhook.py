@@ -1,31 +1,47 @@
 import hmac
 import hashlib
-from datetime import datetime
+import json
+
+from transfa import private_secret
+from transfa.enums import TransfaHeadersIdentifiers
 
 
 class Webhook:
-    def sign_body(self, secret_key, body):
+    def __init__(self):
+        if private_secret is None:
+            raise NotImplementedError(
+                "Can't work without private secret for security reasons."
+            )
+        self.webhook_token = private_secret
+
+    def sign_body(self, body, algorithm=hashlib.sha512):
+        secret = self.webhook_token.encode("utf-8")
 
         if not isinstance(body, bytes):
             body = body.encode("utf-8")
 
-        signature = hmac.new(secret_key.encode('utf-8'), body, digestmod=hashlib.sha512)
+        signature = hmac.new(secret, body, digestmod=algorithm)
 
         return signature.hexdigest()
 
-    def verify_webhook(self, secret_key, body, request_header):
+    def has_data_not_tempered(self, body, transfa_api_signature):
 
-        signature = self.sign_body(secret_key, body)
-        verified = hmac.compare_digest(signature, request_header.encode('utf-8'))
+        body = json.dumps(body)
+        signature = self.sign_body(body)
+        return signature == transfa_api_signature
 
-        if not verified:
-            return False, None
+    def verify(self, headers, body):
+        signature = headers.get(TransfaHeadersIdentifiers.webhook_signature)
 
-        data = body
-        data["created"] = datetime.fromtimestamp(data["created"]).strftime("%m/%d/%Y %H:%M:%S")
-        data["update"] = datetime.fromtimestamp(data["update"]).strftime("%m/%d/%Y %H:%M:%S")
+        if signature is None:
+            raise NotImplementedError(
+                "No signature provided. Contact the technical support."
+            )
 
-        return verified, data
+        if self.has_data_not_tempered(body, signature):
+            return body
+
+        return None
 
 
 webhook = Webhook()
