@@ -7,7 +7,7 @@ from transfa.utils import get_default_error_log_message
 
 class PaymentResource:
     """
-        This class contains methods and utils used for interacting with the payment API.
+    This class contains methods and utils used for interacting with the payment API.
     """
 
     def __init__(self, api):
@@ -32,13 +32,9 @@ class PaymentResource:
 
         # Idempotency key setup in headers
         if idempotency_key:
-            kwargs['headers'] = {
-                "Idempotency-Key": idempotency_key
-            }
+            kwargs["headers"] = {"Idempotency-Key": idempotency_key}
         else:
-            kwargs['headers'] = {
-                "Idempotency-Key": uuid.uuid4().hex
-            }
+            kwargs["headers"] = {"Idempotency-Key": uuid.uuid4().hex}
 
         data["type"] = PaymentTypeEnum.request_payment.value
 
@@ -80,7 +76,7 @@ class PaymentResource:
 
         response_data = response.json()
 
-        return response_data.get('status'), response_data.get('financial_status')
+        return response_data.get("status"), response_data.get("financial_status")
 
 
 Payment = PaymentResource

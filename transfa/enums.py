@@ -30,3 +30,7 @@ class APIKeyPrefix(Enum):
 class PrivateSecretPrefix(Enum):
     test = "ps_test"
     live = "ps_live"
+
+
+class TransfaHeadersIdentifiers(Enum):
+    webhook_signature = "X-Webhook-Transfa-Signature"
