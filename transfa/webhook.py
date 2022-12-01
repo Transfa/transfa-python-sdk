@@ -7,12 +7,25 @@ from transfa.enums import TransfaHeadersIdentifiers
 
 
 class Webhook:
-    def __init__(self):
-        if private_secret is None:
+    def __init__(self, webhook_token=private_secret, body=None, headers=None):
+        if webhook_token is None:
             raise NotImplementedError(
                 "Can't work without private secret for security reasons."
             )
-        self.webhook_token = private_secret
+
+        if body is None:
+            raise NotImplementedError(
+                "Can't work without the body of the request."
+            )
+
+        if headers is None:
+            raise NotImplementedError(
+                "Can't work without the headers."
+            )
+
+        self.webhook_token = webhook_token
+        self.headers = headers
+        self.body = body
 
     def sign_body(self, body, algorithm=hashlib.sha512):
         secret = self.webhook_token.encode("utf-8")
@@ -30,16 +43,16 @@ class Webhook:
         signature = self.sign_body(body)
         return signature == transfa_api_signature
 
-    def verify(self, headers, body):
-        signature = headers.get(TransfaHeadersIdentifiers.webhook_signature)
+    def verify(self):
+        signature = self.headers.get(TransfaHeadersIdentifiers.webhook_signature)
 
         if signature is None:
             raise NotImplementedError(
                 "No signature provided. Contact the technical support."
             )
 
-        if self.has_data_not_tempered(body, signature):
-            return body
+        if self.has_data_not_tempered(self.body, signature):
+            return self.body
 
         return None
 
