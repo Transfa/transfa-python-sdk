@@ -44,7 +44,7 @@ class Webhook:
         return signature == transfa_api_signature
 
     def verify(self):
-        signature = self.headers.get(TransfaHeadersIdentifiers.webhook_signature)
+        signature = self.headers.get(TransfaHeadersIdentifiers.webhook_signature.value)
 
         if signature is None:
             raise NotImplementedError(
