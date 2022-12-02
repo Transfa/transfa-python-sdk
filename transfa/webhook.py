@@ -55,6 +55,3 @@ class Webhook:
             return self.body
 
         return None
-
-
-webhook = Webhook()
