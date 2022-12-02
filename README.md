@@ -42,7 +42,7 @@ from rest_framework.decorators import api_view
 from rest_framework import status
 from rest_framework.response import Response
 
-from transfa.webhook import webhook
+from transfa.webhook import Webhook
 
 # Do not save the secret key in plain text in your code, set it instead as an environment variable.
 secret_key = 'ps_test:...'
@@ -53,9 +53,10 @@ def webhook_endpoint(request):
     
     # Will return True or False and the body of the request that has been slightly modified
     # You should use that data when processing the webhook instead of the previous one
-    verified, data = webhook.verify_webhook(secret_key, body, request.META.get("x-webhook-optimus-signature"))
+    webhook = Webhook(webhook_token=secret_key, body=body, headers=request.headers)
+    verified = webhook.verify()
 
-    if not verified:
+    if verified is None:
         return Response({"detail": "unauthorized"}, status=status.HTTP_401_UNAUTHORIZED)
 
     # Process Webhook payload
