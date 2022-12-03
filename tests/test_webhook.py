@@ -1,41 +1,47 @@
+import hmac
+import hashlib
+import json
+
 from transfa.webhook import Webhook
-
-valid_webhook_token = "WjmCvKDSge1QxNnANoqj1dSdpKQAvK5Gy7VSjwsizWSnUcUzzA61T7XgBMhW1rRv"
-invalid_webhook_token = "DoQoxCi2b5omxTl5ESnapZcNUiYrzlhan5Za4nNWWpHAGbc6GFHHVCwKZxt5K9Xu"
-
-webhook_data = {
-    "id": "2588efb42dc7436f890c1b8a0aabd72f",
-    "event": "payment:processing",
-    "payment": "GYKU0QL4KX",
-    "created": "2022-12-02T10:54:08.511427+00:00",
-    "updated": "2022-12-02T10:54:08.511435+00:00"
-}
-
-invalid_webhook_data = {
-    "id": "2588efb42dc",
-    "event": "payment:success",
-    "payment": "0QL4KX",
-    "created": "2021-12-02T10:54:08.511427+00:00",
-    "updated": "2021-12-02T10:54:08.511435+00:00"
-}
-valid_signature = "ef772c05c9c572d78f3b41e5dd84df04fb8174606746da015c651e296e1c39b9794efa5f173e993dd356c36ab4ca" \
-                  "e2e583fa9f87ac9b49184cb86cc77111a22e"
-invalid_signature = "1273fcf7eeb4444187c4f111d6ca7695e228c8761363c82448529a2fe7100986f78bb1909492c3c1cbe2165cab" \
-                    "287bb557e612f8739ce351f25236fae39db829"
+from transfa.utils import get_random_string
 
 
-def test_valid_webhook_signature():
-    webhook = Webhook(webhook_token=valid_webhook_token, body=webhook_data, headers={
-        "X-Webhook-Transfa-Signature": valid_signature
+class WebhookData:
+
+    def __init__(self):
+        self.valid_webhook_token = get_random_string(64)
+        self.invalid_webhook_token = get_random_string(64)
+
+    def generate_signature(self, body, webhook_token, algorithm=hashlib.sha512):
+        body = json.dumps(body)
+        secret = webhook_token.encode("utf-8")
+
+        if not isinstance(body, bytes):
+            body = body.encode("utf-8")
+
+        signature = hmac.new(secret, body, digestmod=algorithm)
+
+        return signature.hexdigest()
+
+
+def test_valid_webhook_signature(valid_webhook_payload):
+    webhook_data = WebhookData()
+    signature = webhook_data.generate_signature(valid_webhook_payload, webhook_data.valid_webhook_token)
+
+    webhook = Webhook(webhook_token=webhook_data.valid_webhook_token, body=valid_webhook_payload, headers={
+        "X-Webhook-Transfa-Signature": signature
     })
 
     verified = webhook.verify()
 
-    assert verified == webhook_data
+    assert verified == valid_webhook_payload
 
 
-def test_invalid_webhook_signature():
-    webhook = Webhook(webhook_token=valid_webhook_token, body=webhook_data, headers={
+def test_invalid_webhook_signature(valid_webhook_payload, invalid_webhook_payload):
+    webhook_data = WebhookData()
+    invalid_signature = webhook_data.generate_signature(invalid_webhook_payload, webhook_data.valid_webhook_token)
+
+    webhook = Webhook(webhook_token=webhook_data.valid_webhook_token, body=valid_webhook_payload, headers={
         "X-Webhook-Transfa-Signature": invalid_signature
     })
 
@@ -44,18 +50,24 @@ def test_invalid_webhook_signature():
     assert not verified
 
 
-def test_valid_webhook_token():
-    webhook = Webhook(webhook_token=valid_webhook_token, body=webhook_data, headers={
+def test_valid_webhook_token(valid_webhook_payload):
+    webhook_data = WebhookData()
+    valid_signature = webhook_data.generate_signature(valid_webhook_payload, webhook_data.valid_webhook_token)
+
+    webhook = Webhook(webhook_token=webhook_data.valid_webhook_token, body=valid_webhook_payload, headers={
         "X-Webhook-Transfa-Signature": valid_signature
     })
 
     verified = webhook.verify()
 
-    assert verified == webhook_data
+    assert verified == valid_webhook_payload
 
 
-def test_invalid_webhook_token():
-    webhook = Webhook(webhook_token=invalid_webhook_token, body=webhook_data, headers={
+def test_invalid_webhook_token(valid_webhook_payload):
+    webhook_data = WebhookData()
+    valid_signature = webhook_data.generate_signature(valid_webhook_payload, webhook_data.valid_webhook_token)
+
+    webhook = Webhook(webhook_token=webhook_data.invalid_webhook_token, body=valid_webhook_payload, headers={
         "X-Webhook-Transfa-Signature": valid_signature
     })
 
