@@ -14,10 +14,7 @@ API_URL = "https://api.transfapp.com/api/v1/optimus/payment/"
 
 
 def paginator_response(data):
-    return {
-        "count": len(data),
-        "results": data
-    }
+    return {"count": len(data), "results": data}
 
 
 @responses.activate
@@ -32,30 +29,29 @@ def test_request_payment(payment):
         API_URL,
         json=payment,
         status=HTTPStatus.CREATED,
-        match=[matchers.header_matcher({
-            "Authorization": f"{default_auth_header_bearer} {client.api_key}",
-            'accept': 'application/json',
-            'content-type': 'application/json;charset=utf-8',
-            'Idempotency-Key': idempotency_key,
-            "user-agent": "Transfa API SDK-Python/%s" % VERSION,
-        }
-        )]
+        match=[
+            matchers.header_matcher(
+                {
+                    "Authorization": f"{default_auth_header_bearer} {client.api_key}",
+                    "accept": "application/json",
+                    "content-type": "application/json;charset=utf-8",
+                    "Idempotency-Key": idempotency_key,
+                    "user-agent": "Transfa API SDK-Python/%s" % VERSION,
+                }
+            )
+        ],
     )
-    data = {
-        "account_alias": "60201010",
-        "amount": 5000,
-        "mode": "mtn-benin"
-    }
+    data = {"account_alias": "60201010", "amount": 5000, "mode": "mtn-benin"}
 
     response = client.Payment.request_payment(data, idempotency_key=idempotency_key)
 
     assert response.status_code == HTTPStatus.CREATED
     response_data = response.json()
 
-    assert response_data['account_alias'] == data['account_alias']
-    assert response_data['amount'] == data['amount']
-    assert response_data['mode'] == data['mode']
-    assert response_data['type'] == "request-payment"
+    assert response_data["account_alias"] == data["account_alias"]
+    assert response_data["amount"] == data["amount"]
+    assert response_data["mode"] == data["mode"]
+    assert response_data["type"] == "request-payment"
 
 
 @responses.activate
@@ -69,11 +65,14 @@ def test_list_payments(payments):
         API_URL,
         json=paginator_response(payments),
         status=HTTPStatus.OK,
-        match=[matchers.header_matcher({
-            "Authorization": f"{default_auth_header_bearer} {client.api_key}",
-            "user-agent": "Transfa API SDK-Python/%s" % VERSION,
-        }
-        )]
+        match=[
+            matchers.header_matcher(
+                {
+                    "Authorization": f"{default_auth_header_bearer} {client.api_key}",
+                    "user-agent": "Transfa API SDK-Python/%s" % VERSION,
+                }
+            )
+        ],
     )
 
     response = client.Payment.list()
@@ -81,7 +80,7 @@ def test_list_payments(payments):
     assert response.status_code == HTTPStatus.OK
     response_data = response.json()
 
-    assert response_data['count'] == 1
+    assert response_data["count"] == 1
 
 
 @responses.activate
@@ -95,19 +94,23 @@ def test_retrieve_payment(payment):
         f"{API_URL}{payment['id']}/",
         json=payment,
         status=HTTPStatus.OK,
-        match=[matchers.header_matcher({
-            "Authorization": f"{default_auth_header_bearer} {client.api_key}",
-            "user-agent": "Transfa API SDK-Python/%s" % VERSION,
-        }
-        ), matchers.query_param_matcher({})]
+        match=[
+            matchers.header_matcher(
+                {
+                    "Authorization": f"{default_auth_header_bearer} {client.api_key}",
+                    "user-agent": "Transfa API SDK-Python/%s" % VERSION,
+                }
+            ),
+            matchers.query_param_matcher({}),
+        ],
     )
 
-    response = client.Payment.retrieve(payment['id'])
+    response = client.Payment.retrieve(payment["id"])
 
     assert response.status_code == HTTPStatus.OK
     response_data = response.json()
 
-    assert response_data['id'] == payment['id']
+    assert response_data["id"] == payment["id"]
 
 
 @responses.activate
@@ -121,16 +124,19 @@ def test_refund_payment(payment):
         f"{API_URL}{payment['id']}/refund/",
         json=payment,
         status=HTTPStatus.OK,
-        match=[matchers.header_matcher({
-            "Authorization": f"{default_auth_header_bearer} {client.api_key}",
-            "user-agent": "Transfa API SDK-Python/%s" % VERSION,
-        }
-        )]
+        match=[
+            matchers.header_matcher(
+                {
+                    "Authorization": f"{default_auth_header_bearer} {client.api_key}",
+                    "user-agent": "Transfa API SDK-Python/%s" % VERSION,
+                }
+            )
+        ],
     )
 
-    response = client.Payment.refund(payment['id'])
+    response = client.Payment.refund(payment["id"])
 
     assert response.status_code == HTTPStatus.OK
     response_data = response.json()
 
-    assert response_data['id'] == payment['id']
+    assert response_data["id"] == payment["id"]

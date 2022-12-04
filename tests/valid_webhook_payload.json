@@ -1,0 +1,7 @@
+{
+        "id": "2588efb42dc7436f890c1b8a0aabd72f",
+        "event": "payment:processing",
+        "payment": "GYKU0QL4KX",
+        "created": "2022-12-02T10:54:08.511427+00:00",
+        "updated": "2022-12-02T10:54:08.511435+00:00"
+}
