@@ -6,6 +6,8 @@ Changelog
 
 [v0.2.0] - 2022-12-04
 ------------------
+- add webhooks handling
+- minor refactoring
 
 [v0.1.3] - 2022-09-17
 ------------------
