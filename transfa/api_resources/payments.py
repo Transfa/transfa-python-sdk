@@ -34,10 +34,7 @@ class PaymentResource:
         if idempotency_key:
             kwargs["headers"] = {"Idempotency-Key": idempotency_key}
         else:
-            raise NotImplementedError(
-                "Can't work without the idempotency key."
-            )
-            #kwargs["headers"] = {"Idempotency-Key": uuid.uuid4().hex}
+            kwargs["headers"] = {"Idempotency-Key": uuid.uuid4().hex}
 
         data["type"] = PaymentTypeEnum.request_payment.value
 
