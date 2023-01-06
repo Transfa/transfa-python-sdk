@@ -121,5 +121,7 @@ def webhook_endpoint(request):
     # ...
 
     # Note: Make sure you send an HTTP 200 OK status after processing the payload
+    # We have a retry mechanism that will send the webhook request up to 3 time in case you return
+    # a status code different than 200.
     return Response({"detail": True}, status=status.HTTP_200_OK)
 ```
