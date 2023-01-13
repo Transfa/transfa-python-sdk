@@ -68,7 +68,7 @@ class PaymentResource:
     def status(self, payment_id):
         """
         :param payment_id: Payment id.
-        :return: A tuple of the status and financial status of the payment. => (status, financial_status)
+        :return: A dictionnary of the status and financial status of the payment. => (status, financial_status)
         """
         response = self.retrieve(payment_id)
         if response.status_code != 200:
@@ -76,7 +76,12 @@ class PaymentResource:
 
         response_data = response.json()
 
-        return response_data.get("status"), response_data.get("financial_status")
+        status_data = {
+            "status": response_data.get("status"),
+            "financial_status": response_data.get("financial_status")
+        } 
+
+        return status_data
 
 
 Payment = PaymentResource

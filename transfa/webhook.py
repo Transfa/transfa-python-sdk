@@ -23,6 +23,10 @@ class Webhook:
                 "Can't work without the headers."
             )
 
+        if isinstance(body, bytes):
+            body = body.decode("utf-8")
+            body = json.loads(body)
+
         self.webhook_token = webhook_token
         self.headers = headers
         self.body = body
@@ -39,7 +43,9 @@ class Webhook:
 
     def has_data_not_tempered(self, body, transfa_api_signature):
 
-        body = json.dumps(body)
+        if isinstance(body, dict):
+            body = json.dumps(body)
+
         signature = self.sign_body(body)
         return signature == transfa_api_signature
 
