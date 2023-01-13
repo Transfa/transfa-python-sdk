@@ -4,6 +4,8 @@ Changelog
 [Unreleased]
 ------------
 
+- minor fixes on webhook feature and documentation enhancement
+
 [v0.2.0] - 2022-12-04
 ------------------
 - add webhooks handling
