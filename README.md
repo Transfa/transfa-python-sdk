@@ -20,6 +20,7 @@ pip install --upgrade transfa
 ## Getting started
 
 ### Request a payment
+
 When sending a payment request to Transfa's API it is important to provide a unique idempotency key. That key will be in the header of each payment request. An idempotency key is a key that will make each payment request unique thus preventing us from creating the same payment object several times in the database in case of a network error or an outage. No matter how many times you send a request with the same idempotency key, it won't change the result of the first executed one.
 
 Here is an example:
