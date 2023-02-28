@@ -91,7 +91,7 @@ print(response.text)
 ### Verify webhook
 We will notify you each time there is be an update about your payments at the condition that your Organization supports the webhook feature (check on your organization's dashboard if you wan't to activate it) and that you provided a webhook url at which we can send the datas when sending the payment request. This will help you to automatically get an update without having to periodically send GET requests to our API.
 
-But before you process the payload of a Webhook request, you must first verify that it is coming from Transfa and not from an unknown server acting like Transfa's server. Each webhook request will come with a parameter in the headers named `X-Webhook-Transfa-Signature`. You'll use that signature to make sure that the request is coming from us.
+But before you process the payload of a Webhook request, you must first verify that it is coming from Transfa and not from an unknown server acting like Transfa's server. Each webhook request will come with a parameter in the headers named `X-Webhook-Optimus-Signature`. You'll use that signature to make sure that the request is coming from us.
 
 We provided you with a class called `Webhook` that will handle the whole verification underneath. All you have to do is creating an instance of the class with the required parameters.
 Here is an example of how you would do it with Django Rest Framework.
