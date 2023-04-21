@@ -4,6 +4,9 @@ Changelog
 [Unreleased]
 ------------
 
+[v0.2.3] - 2023-04-21
+------------------
+
 [v0.2.2] - 2023-02-28
 ------------------
 - Update Webhook's Header Identifier
