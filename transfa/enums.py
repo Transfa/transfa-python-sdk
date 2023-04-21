@@ -33,4 +33,4 @@ class PrivateSecretPrefix(Enum):
 
 
 class TransfaHeadersIdentifiers(Enum):
-    webhook_signature = "X-Webhook-Optimus-Signature"
+    webhook_signature = "X-Webhook-Transfa-Signature"

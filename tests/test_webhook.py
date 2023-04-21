@@ -29,7 +29,7 @@ def test_valid_webhook_signature(valid_webhook_payload):
     signature = webhook_data.generate_signature(valid_webhook_payload, webhook_data.valid_webhook_token)
 
     webhook = Webhook(webhook_token=webhook_data.valid_webhook_token, body=valid_webhook_payload, headers={
-        "X-Webhook-Optimus-Signature": signature
+        "X-Webhook-Transfa-Signature": signature
     })
 
     verified = webhook.verify()
@@ -42,7 +42,7 @@ def test_invalid_webhook_signature(valid_webhook_payload, invalid_webhook_payloa
     invalid_signature = webhook_data.generate_signature(invalid_webhook_payload, webhook_data.valid_webhook_token)
 
     webhook = Webhook(webhook_token=webhook_data.valid_webhook_token, body=valid_webhook_payload, headers={
-        "X-Webhook-Optimus-Signature": invalid_signature
+        "X-Webhook-Transfa-Signature": invalid_signature
     })
 
     verified = webhook.verify()
@@ -55,7 +55,7 @@ def test_valid_webhook_token(valid_webhook_payload):
     valid_signature = webhook_data.generate_signature(valid_webhook_payload, webhook_data.valid_webhook_token)
 
     webhook = Webhook(webhook_token=webhook_data.valid_webhook_token, body=valid_webhook_payload, headers={
-        "X-Webhook-Optimus-Signature": valid_signature
+        "X-Webhook-Transfa-Signature": valid_signature
     })
 
     verified = webhook.verify()
@@ -68,7 +68,7 @@ def test_invalid_webhook_token(valid_webhook_payload):
     valid_signature = webhook_data.generate_signature(valid_webhook_payload, webhook_data.valid_webhook_token)
 
     webhook = Webhook(webhook_token=webhook_data.invalid_webhook_token, body=valid_webhook_payload, headers={
-        "X-Webhook-Optimus-Signature": valid_signature
+        "X-Webhook-Transfa-Signature": valid_signature
     })
 
     verified = webhook.verify()
