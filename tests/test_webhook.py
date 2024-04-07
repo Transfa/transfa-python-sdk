@@ -7,7 +7,6 @@ from transfa.utils import get_random_string
 
 
 class WebhookData:
-
     def __init__(self):
         self.valid_webhook_token = get_random_string(64)
         self.invalid_webhook_token = get_random_string(64)
@@ -26,11 +25,15 @@ class WebhookData:
 
 def test_valid_webhook_signature(valid_webhook_payload):
     webhook_data = WebhookData()
-    signature = webhook_data.generate_signature(valid_webhook_payload, webhook_data.valid_webhook_token)
+    signature = webhook_data.generate_signature(
+        valid_webhook_payload, webhook_data.valid_webhook_token
+    )
 
-    webhook = Webhook(webhook_token=webhook_data.valid_webhook_token, body=valid_webhook_payload, headers={
-        "X-Webhook-Transfa-Signature": signature
-    })
+    webhook = Webhook(
+        webhook_token=webhook_data.valid_webhook_token,
+        body=valid_webhook_payload,
+        headers={"X-Webhook-Transfa-Signature": signature},
+    )
 
     verified = webhook.verify()
 
@@ -39,11 +42,15 @@ def test_valid_webhook_signature(valid_webhook_payload):
 
 def test_invalid_webhook_signature(valid_webhook_payload, invalid_webhook_payload):
     webhook_data = WebhookData()
-    invalid_signature = webhook_data.generate_signature(invalid_webhook_payload, webhook_data.valid_webhook_token)
+    invalid_signature = webhook_data.generate_signature(
+        invalid_webhook_payload, webhook_data.valid_webhook_token
+    )
 
-    webhook = Webhook(webhook_token=webhook_data.valid_webhook_token, body=valid_webhook_payload, headers={
-        "X-Webhook-Transfa-Signature": invalid_signature
-    })
+    webhook = Webhook(
+        webhook_token=webhook_data.valid_webhook_token,
+        body=valid_webhook_payload,
+        headers={"X-Webhook-Transfa-Signature": invalid_signature},
+    )
 
     verified = webhook.verify()
 
@@ -52,11 +59,15 @@ def test_invalid_webhook_signature(valid_webhook_payload, invalid_webhook_payloa
 
 def test_valid_webhook_token(valid_webhook_payload):
     webhook_data = WebhookData()
-    valid_signature = webhook_data.generate_signature(valid_webhook_payload, webhook_data.valid_webhook_token)
+    valid_signature = webhook_data.generate_signature(
+        valid_webhook_payload, webhook_data.valid_webhook_token
+    )
 
-    webhook = Webhook(webhook_token=webhook_data.valid_webhook_token, body=valid_webhook_payload, headers={
-        "X-Webhook-Transfa-Signature": valid_signature
-    })
+    webhook = Webhook(
+        webhook_token=webhook_data.valid_webhook_token,
+        body=valid_webhook_payload,
+        headers={"X-Webhook-Transfa-Signature": valid_signature},
+    )
 
     verified = webhook.verify()
 
@@ -65,11 +76,15 @@ def test_valid_webhook_token(valid_webhook_payload):
 
 def test_invalid_webhook_token(valid_webhook_payload):
     webhook_data = WebhookData()
-    valid_signature = webhook_data.generate_signature(valid_webhook_payload, webhook_data.valid_webhook_token)
+    valid_signature = webhook_data.generate_signature(
+        valid_webhook_payload, webhook_data.valid_webhook_token
+    )
 
-    webhook = Webhook(webhook_token=webhook_data.invalid_webhook_token, body=valid_webhook_payload, headers={
-        "X-Webhook-Transfa-Signature": valid_signature
-    })
+    webhook = Webhook(
+        webhook_token=webhook_data.invalid_webhook_token,
+        body=valid_webhook_payload,
+        headers={"X-Webhook-Transfa-Signature": valid_signature},
+    )
 
     verified = webhook.verify()
 

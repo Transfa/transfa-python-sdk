@@ -78,8 +78,8 @@ class PaymentResource:
 
         status_data = {
             "status": response_data.get("status"),
-            "financial_status": response_data.get("financial_status")
-        } 
+            "financial_status": response_data.get("financial_status"),
+        }
 
         return status_data
 

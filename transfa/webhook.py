@@ -14,14 +14,10 @@ class Webhook:
             )
 
         if body is None:
-            raise NotImplementedError(
-                "Can't work without the body of the request."
-            )
+            raise NotImplementedError("Can't work without the body of the request.")
 
         if headers is None:
-            raise NotImplementedError(
-                "Can't work without the headers."
-            )
+            raise NotImplementedError("Can't work without the headers.")
 
         if isinstance(body, bytes):
             body = body.decode("utf-8")
@@ -42,7 +38,6 @@ class Webhook:
         return signature.hexdigest()
 
     def has_data_not_tempered(self, body, transfa_api_signature):
-
         if isinstance(body, dict):
             body = json.dumps(body)
 
