@@ -56,6 +56,3 @@ class WebhookResource:
             return self.body
 
         return None
-
-
-Webhook = WebhookResource()
