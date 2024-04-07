@@ -14,7 +14,3 @@ verify_ssl = True
 # API Resources
 
 from transfa.api_resources import *
-
-# Webhook
-
-from transfa.webhook import *

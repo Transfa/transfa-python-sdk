@@ -2,8 +2,8 @@ import hmac
 import hashlib
 import json
 
-from transfa.webhook import Webhook
-from transfa.utils import get_random_string
+from transfa.api_resources.webhook import WebhookResource
+from transfa.utils.helpers import get_random_string
 
 
 class WebhookData:
@@ -29,7 +29,7 @@ def test_valid_webhook_signature(valid_webhook_payload):
         valid_webhook_payload, webhook_data.valid_webhook_token
     )
 
-    webhook = Webhook(
+    webhook = WebhookResource(
         webhook_token=webhook_data.valid_webhook_token,
         body=valid_webhook_payload,
         headers={"X-Webhook-Transfa-Signature": signature},
@@ -46,7 +46,7 @@ def test_invalid_webhook_signature(valid_webhook_payload, invalid_webhook_payloa
         invalid_webhook_payload, webhook_data.valid_webhook_token
     )
 
-    webhook = Webhook(
+    webhook = WebhookResource(
         webhook_token=webhook_data.valid_webhook_token,
         body=valid_webhook_payload,
         headers={"X-Webhook-Transfa-Signature": invalid_signature},
@@ -63,7 +63,7 @@ def test_valid_webhook_token(valid_webhook_payload):
         valid_webhook_payload, webhook_data.valid_webhook_token
     )
 
-    webhook = Webhook(
+    webhook = WebhookResource(
         webhook_token=webhook_data.valid_webhook_token,
         body=valid_webhook_payload,
         headers={"X-Webhook-Transfa-Signature": valid_signature},
@@ -80,7 +80,7 @@ def test_invalid_webhook_token(valid_webhook_payload):
         valid_webhook_payload, webhook_data.valid_webhook_token
     )
 
-    webhook = Webhook(
+    webhook = WebhookResource(
         webhook_token=webhook_data.invalid_webhook_token,
         body=valid_webhook_payload,
         headers={"X-Webhook-Transfa-Signature": valid_signature},
