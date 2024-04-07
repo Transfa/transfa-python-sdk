@@ -10,8 +10,6 @@ api_key = None
 private_secret = None
 api_base = "https://api.transfapp.com"
 verify_ssl = True
-default_auth_header_bearer = "Api-Transfa-Key"
-
 
 # API Resources
 

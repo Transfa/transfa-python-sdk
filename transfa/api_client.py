@@ -2,7 +2,7 @@ import json
 
 from requests import request
 
-from transfa import api_key, api_base, default_auth_header_bearer
+from transfa import api_key, api_base
 from transfa.api_resources.payments import PaymentResource
 
 from transfa.version import VERSION
@@ -10,7 +10,6 @@ from transfa.version import VERSION
 
 class TransfaAPIClient:
     _base_url = api_base
-    auth_header_prefix = default_auth_header_bearer
     __version__ = VERSION
 
     def __init__(
@@ -44,7 +43,7 @@ class TransfaAPIClient:
         headers = {
             "user-agent": "Transfa API SDK-Python/%s" % self.__version__,
             "accept": "application/json",
-            "Authorization": f"{self.auth_header_prefix} {self.api_key}",
+            "Authorization": f"{self.api_key}",
         }
 
         if "headers" in kwargs:

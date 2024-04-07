@@ -4,8 +4,6 @@ from http import HTTPStatus
 import responses
 from responses import matchers
 
-from transfa import default_auth_header_bearer
-
 from transfa.api_client import client
 from transfa.version import VERSION
 
@@ -32,7 +30,7 @@ def test_request_payment(payment):
         match=[
             matchers.header_matcher(
                 {
-                    "Authorization": f"{default_auth_header_bearer} {client.api_key}",
+                    "Authorization": f"{client.api_key}",
                     "accept": "application/json",
                     "content-type": "application/json;charset=utf-8",
                     "Idempotency-Key": idempotency_key,
@@ -68,7 +66,7 @@ def test_list_payments(payments):
         match=[
             matchers.header_matcher(
                 {
-                    "Authorization": f"{default_auth_header_bearer} {client.api_key}",
+                    "Authorization": f"{client.api_key}",
                     "user-agent": "Transfa API SDK-Python/%s" % VERSION,
                 }
             )
@@ -97,7 +95,7 @@ def test_retrieve_payment(payment):
         match=[
             matchers.header_matcher(
                 {
-                    "Authorization": f"{default_auth_header_bearer} {client.api_key}",
+                    "Authorization": f"{client.api_key}",
                     "user-agent": "Transfa API SDK-Python/%s" % VERSION,
                 }
             ),
@@ -127,7 +125,7 @@ def test_refund_payment(payment):
         match=[
             matchers.header_matcher(
                 {
-                    "Authorization": f"{default_auth_header_bearer} {client.api_key}",
+                    "Authorization": f"{client.api_key}",
                     "user-agent": "Transfa API SDK-Python/%s" % VERSION,
                 }
             )
