@@ -1,8 +1,8 @@
 import logging
 import uuid
 
-from transfa.enums import PaymentTypeEnum
-from transfa.utils import get_default_error_log_message
+from transfa.types.enums import PaymentTypeEnum
+from transfa.utils.helpers import get_default_error_log_message
 
 
 class PaymentResource:

@@ -3,10 +3,10 @@ import hashlib
 import json
 
 from transfa import private_secret
-from transfa.enums import TransfaHeadersIdentifiers
+from transfa.types.enums import TransfaHeadersIdentifiers
 
 
-class Webhook:
+class WebhookResource:
     def __init__(self, webhook_token=private_secret, body=None, headers=None):
         if webhook_token is None:
             raise NotImplementedError(

@@ -5,7 +5,7 @@ from requests import request
 from transfa import api_key, api_base
 from transfa.api_resources.payments import PaymentResource
 
-from transfa.version import VERSION
+from transfa.configs.version import VERSION
 
 
 class TransfaAPIClient:

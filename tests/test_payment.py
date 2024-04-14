@@ -5,7 +5,7 @@ import responses
 from responses import matchers
 
 from transfa.api_client import client
-from transfa.version import VERSION
+from transfa.configs.version import VERSION
 
 client.api_key = "ak_live_123"
 API_URL = "https://api.transfapp.com/api/v1/optimus/payment/"
