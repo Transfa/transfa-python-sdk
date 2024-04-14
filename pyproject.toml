@@ -6,5 +6,5 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "transfa"
-version = "0.2.4"
+version = "0.2.5"
 dynamic = ["description", "readme", "optional-dependencies", "dependencies", "classifiers", "authors", "license"]

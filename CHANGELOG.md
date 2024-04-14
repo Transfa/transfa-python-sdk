@@ -4,6 +4,9 @@ Changelog
 [Unreleased]
 ------------
 
+[v0.2.5] - 2024-04-14
+------------------
+
 - Refactor python sdk structure
 
 [v0.2.4] - 2024-02-05
